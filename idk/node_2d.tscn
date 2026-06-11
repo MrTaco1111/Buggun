@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://baififspe0o2o"]
+
+[ext_resource type="Script" uid="uid://bd8r5hapfwx0h" path="res://Player/character_body_2d.gd" id="1_l16vu"]
+[ext_resource type="Script" uid="uid://dugo0umr0hjcs" path="res://idk/global.gd" id="1_w0g3g"]
+[ext_resource type="Script" uid="uid://qr84iv8x7t8b" path="res://Player/camera_2d.gd" id="2_w0g3g"]
+[ext_resource type="Texture2D" uid="uid://dviujko1wda8n" path="res://Player/cricket_insect_PNG17.png" id="3_8p7xs"]
+[ext_resource type="Script" uid="uid://dr6tf6dsq0gfn" path="res://Player/gun.gd" id="4_odnlq"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0e48y"]
+radius = 92.0
+height = 284.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0hol4"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_epypp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0e48y"]
+size = Vector2(5994, 324)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wtcfe"]
+
+[node name="main" type="Node2D" unique_id=1284915440]
+script = ExtResource("1_w0g3g")
+ammo = 3.0
+
+[node name="Cricket" type="CharacterBody2D" parent="." unique_id=1432975419]
+scale = Vector2(0.825, 0.825)
+slide_on_ceiling = false
+script = ExtResource("1_l16vu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Cricket" unique_id=1939674927]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_0e48y")
+debug_color = Color(0, 0.6039216, 0.6784314, 0.7176471)
+
+[node name="Camera2D" type="Camera2D" parent="Cricket" unique_id=209650761]
+zoom = Vector2(0.25, 0.25)
+limit_enabled = false
+position_smoothing_speed = 50.0
+script = ExtResource("2_w0g3g")
+
+[node name="cricket sprite" type="Sprite2D" parent="Cricket" unique_id=1321420791]
+position = Vector2(2.2888184e-05, -10.909077)
+scale = Vector2(0.6406927, 0.72121215)
+texture = ExtResource("3_8p7xs")
+
+[node name="Gun" type="Node2D" parent="Cricket" unique_id=1927266296]
+z_as_relative = false
+position = Vector2(-1.5258789e-05, 1.2121239)
+scale = Vector2(1.2121212, 1.2121212)
+script = ExtResource("4_odnlq")
+hitStopTime = 0.4
+
+[node name="GunSprite" type="Sprite2D" parent="Cricket/Gun" unique_id=36595566]
+position = Vector2(185.43, 11)
+rotation = 3.1415927
+scale = Vector2(0.336, 0.039)
+texture = SubResource("NoiseTexture2D_0hol4")
+
+[node name="Timer" type="Timer" parent="Cricket/Gun" unique_id=1144496307]
+one_shot = true
+
+[node name="GunWallDetector" type="RayCast2D" parent="Cricket/Gun" unique_id=2095396144]
+position = Vector2(-0.145, 12.18)
+exclude_parent = false
+target_position = Vector2(285.14502, -0.18000221)
+collide_with_areas = true
+
+[node name="CoyoteTimer" type="Timer" parent="Cricket" unique_id=986838334]
+one_shot = true
+ignore_time_scale = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1964810629]
+position = Vector2(-2, 161)
+physics_material_override = SubResource("PhysicsMaterial_epypp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=42440017]
+position = Vector2(-4, 152)
+shape = SubResource("RectangleShape2D_0e48y")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D/CollisionShape2D" unique_id=657834786]
+position = Vector2(2, 3)
+scale = Vector2(6022, 331.99997)
+texture = SubResource("PlaceholderTexture2D_wtcfe")
+
+[connection signal="timeout" from="Cricket/Gun/Timer" to="Cricket/Gun" method="_on_timer_timeout"]
+[connection signal="timeout" from="Cricket/CoyoteTimer" to="Cricket" method="_on_coyote_timer_timeout"]

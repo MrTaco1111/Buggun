@@ -1,0 +1,115 @@
+[gd_scene format=3 uid="uid://nv5npkc5rewb"]
+
+[ext_resource type="Script" uid="uid://cm0x85i4yo8fi" path="res://Boolet/boolet.gd" id="1_4ren8"]
+
+[sub_resource type="GDScript" id="GDScript_4ren8"]
+script/source = "extends RayCast2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[sub_resource type="Curve" id="Curve_8wejs"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_8wejs"]
+offsets = PackedFloat32Array(0, 0.9876543)
+colors = PackedColorArray(0.8786871, 0.82923293, 0.35787925, 1, 0.9396496, 0.92567503, 0.714326, 1)
+
+[sub_resource type="Curve" id="Curve_gg1fg"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_8qsdp"]
+offsets = PackedFloat32Array(0, 0.97590363)
+colors = PackedColorArray(0.9861327, 0.9776483, 0.7316177, 1, 0.9722269, 0.9707119, 0.8995414, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8wejs"]
+gradient = SubResource("Gradient_8qsdp")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Curve" id="Curve_gdr2s"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_8qsdp"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Boolet" type="CharacterBody2D" unique_id=1894682181]
+rotation = -1.5707964
+script = ExtResource("1_4ren8")
+
+[node name="Timer" type="Timer" parent="." unique_id=1172169686]
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=1772219459]
+target_position = Vector2(10000, 0)
+collide_with_areas = true
+script = SubResource("GDScript_4ren8")
+
+[node name="Timer2" type="Timer" parent="." unique_id=1212651218]
+one_shot = true
+
+[node name="BooletTrail" type="Line2D" parent="." unique_id=2132782440]
+points = PackedVector2Array(0, 0, 0, 0)
+width_curve = SubResource("Curve_8wejs")
+default_color = Color(0.87709934, 0.8773942, 0.72662777, 1)
+gradient = SubResource("Gradient_8wejs")
+texture_mode = 2
+
+[node name="BooletTrailOutline" type="Line2D" parent="." unique_id=1321386283]
+points = PackedVector2Array(5, 0, 0, 0)
+width = 20.0
+width_curve = SubResource("Curve_gg1fg")
+default_color = Color(0.9686869, 0.9533861, 0.83036876, 1)
+
+[node name="GunSprayParticles" type="CPUParticles2D" parent="." unique_id=2109065770]
+z_index = -1
+emitting = false
+amount = 5
+texture = SubResource("GradientTexture2D_8wejs")
+lifetime = 0.25
+one_shot = true
+explosiveness = 1.0
+emission_shape = 4
+emission_points = PackedVector2Array(-18.71, 2.085, -18.62, -1.95, 50, -2.245, 50, 1.575, 50, -1.67)
+emission_colors = PackedColorArray()
+direction = Vector2(0, 0)
+spread = 50.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 396.04
+initial_velocity_max = 831.68
+scale_amount_min = 0.09
+scale_amount_max = 0.09
+scale_amount_curve = SubResource("Curve_gdr2s")
+
+[node name="BooletSprayParticles" type="CPUParticles2D" parent="." unique_id=938012411]
+z_index = -1
+emitting = false
+amount = 20
+texture = SubResource("GradientTexture2D_8wejs")
+lifetime = 0.22
+one_shot = true
+explosiveness = 1.0
+emission_shape = 1
+emission_sphere_radius = 8.6
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 333.53
+initial_velocity_max = 521.65
+scale_amount_min = 0.5
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_8qsdp")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer2" to="." method="_on_timer_2_timeout"]

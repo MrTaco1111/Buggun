@@ -1,0 +1,112 @@
+[gd_scene format=3 uid="uid://clpiprr418s4i"]
+
+[ext_resource type="Script" uid="uid://wndr71wiq55o" path="res://BlankBlast/blank_blast.gd" id="1_q80a5"]
+
+[sub_resource type="Gradient" id="Gradient_q80a5"]
+interpolation_mode = 2
+colors = PackedColorArray(0.25843492, 0.2571967, 0.23646289, 1, 0.2901961, 0.2901961, 0.2901961, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wadci"]
+gradient = SubResource("Gradient_q80a5")
+fill = 2
+fill_from = Vector2(0.45, 0.54)
+fill_to = Vector2(1, 0.004347826)
+
+[sub_resource type="Curve" id="Curve_q80a5"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.6, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_kdubu"]
+offsets = PackedFloat32Array(0, 0.97590363)
+colors = PackedColorArray(0.9861327, 0.9776483, 0.7316177, 1, 0.9722269, 0.9707119, 0.8995414, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_q80a5"]
+gradient = SubResource("Gradient_kdubu")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Curve" id="Curve_wadci"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_wadci"]
+offsets = PackedFloat32Array(0.012048192, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.33771512, 0.28585032, 0.17421445, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tcxf6"]
+gradient = SubResource("Gradient_wadci")
+fill = 2
+fill_from = Vector2(0.49565217, 0.5173913)
+fill_to = Vector2(0.59130436, 1)
+
+[node name="blankBlast" type="CharacterBody2D" unique_id=807216818]
+script = ExtResource("1_q80a5")
+
+[node name="SmokeyParticles" type="CPUParticles2D" parent="." unique_id=652393660]
+z_index = -2
+emitting = false
+amount = 40
+texture = SubResource("GradientTexture2D_wadci")
+lifetime = 2.3899999999999997
+one_shot = true
+explosiveness = 0.98
+lifetime_randomness = 0.25
+emission_shape = 1
+emission_sphere_radius = 7.34
+direction = Vector2(0, 0)
+spread = 25.4
+gravity = Vector2(0, 0)
+initial_velocity_min = 813.79
+initial_velocity_max = 1000.0
+scale_amount_min = 0.6
+scale_amount_curve = SubResource("Curve_q80a5")
+
+[node name="SmokeGravityTimer" type="Timer" parent="." unique_id=47892190]
+one_shot = true
+
+[node name="GunSprayParticles" type="CPUParticles2D" parent="." unique_id=876494815]
+z_index = -1
+emitting = false
+amount = 5
+texture = SubResource("GradientTexture2D_q80a5")
+lifetime = 0.87
+one_shot = true
+explosiveness = 1.0
+emission_shape = 4
+emission_points = PackedVector2Array(-18.71, 2.085, -18.62, -1.95, 50, -2.245, 50, 1.575, 50, -1.67)
+emission_colors = PackedColorArray()
+direction = Vector2(0, 0)
+spread = 50.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 594.06
+initial_velocity_max = 1000.0
+scale_amount_min = 0.09
+scale_amount_max = 0.09
+scale_amount_curve = SubResource("Curve_wadci")
+
+[node name="ExplosionParticles" type="CPUParticles2D" parent="." unique_id=296898759]
+z_index = -2
+emitting = false
+amount = 22
+texture = SubResource("GradientTexture2D_tcxf6")
+lifetime = 0.35000000000000003
+one_shot = true
+explosiveness = 0.98
+lifetime_randomness = 0.25
+emission_shape = 5
+emission_points = PackedVector2Array(13.17, 41.955, 0, 0, 0, -37.175, -2.12, 39.005, 0, -27.155, 2.52, 0)
+emission_normals = PackedVector2Array(0.73, 0.105, 1, 0, 0.665, -0.17, 0.94, -0.065, 0.935, 0.115, 0.385, 0)
+emission_colors = PackedColorArray(0.84485984, 0.6128915, 0.38044354, 1, 0.88703215, 0.44641393, 0.25308996, 1, 0.84485984, 0.6128915, 0.38044354, 1, 0.88703215, 0.44641393, 0.25308996, 1, 0.8082756, 0.5085347, 0.267555, 1, 0.88703215, 0.44641393, 0.25308996, 1)
+direction = Vector2(0, 0)
+spread = 10.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 883.09
+initial_velocity_max = 1000.0
+scale_amount_min = 0.6
+scale_amount_curve = SubResource("Curve_q80a5")
+
+[node name="DeleteTimer" type="Timer" parent="." unique_id=1499578415]
+one_shot = true
+
+[connection signal="timeout" from="SmokeGravityTimer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="DeleteTimer" to="." method="_on_delete_timer_timeout"]

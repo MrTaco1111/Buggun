@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://snj7l1d563r"]
+
+[ext_resource type="Script" uid="uid://dr6tf6dsq0gfn" path="res://Player/gun.gd" id="1_jpqjm"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fry05"]
+
+[node name="Node2D" type="Node2D" unique_id=1776854429]
+
+[node name="Gun" type="Node2D" parent="." unique_id=508825488]
+script = ExtResource("1_jpqjm")
+
+[node name="Sprite2D" type="Sprite2D" parent="Gun" unique_id=662936345]
+texture = SubResource("NoiseTexture2D_fry05")
