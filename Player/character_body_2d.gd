@@ -7,6 +7,7 @@ const BLAST_VELOCITY : float = -2000.0
 @onready var coyoteCheck : bool = true
 var canCoyoteJump : bool
 @onready var dashFrames : int = 0
+@onready var canDash : bool = true
 
 func _physics_process(delta: float) -> void:
 	Global.charPosition = position
@@ -26,8 +27,10 @@ func _physics_process(delta: float) -> void:
 			canCoyoteJump = false
 			velocity.y = JUMP_VELOCITY
 
-	if Input.is_action_just_pressed("dash"):
+	if Input.is_action_just_pressed("dash") and canDash:
 		dashFrames = 1
+		canDash = false
+		$"DashTimer".start(1)
 
 	if(dashFrames > 0):
 		if $"cricket sprite".flip_h == true:
@@ -92,4 +95,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_coyote_timer_timeout() -> void:
 	canCoyoteJump = false
-	pass
+
+
+func _on_dash_timer_timeout() -> void:
+	canDash = true

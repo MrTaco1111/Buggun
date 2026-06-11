@@ -70,6 +70,8 @@ collide_with_areas = true
 one_shot = true
 ignore_time_scale = true
 
+[node name="DashTimer" type="Timer" parent="Cricket" unique_id=1711923200]
+
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1964810629]
 position = Vector2(-2, 161)
 physics_material_override = SubResource("PhysicsMaterial_epypp")
@@ -85,3 +87,5 @@ texture = SubResource("PlaceholderTexture2D_wtcfe")
 
 [connection signal="timeout" from="Cricket/Gun/Timer" to="Cricket/Gun" method="_on_timer_timeout"]
 [connection signal="timeout" from="Cricket/CoyoteTimer" to="Cricket" method="_on_coyote_timer_timeout"]
+[connection signal="timeout" from="Cricket/DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="Cricket/DashTimer" to="Cricket" method="_on_dash_timer_timeout"]
